@@ -1,120 +1,134 @@
-const module = (function () {
-    const gameboard =["","","","","","","","",""]; 
-    const board = document.querySelectorAll(".square")
-    const tempBoard = Array.from(board)
+//Crear fabrica de jugadores
+const Player = (chip, turn) => {
+    this.chip = chip;
+    this.turn = turn;
+    const getChip =  chip;
+    const getTurn =  turn;
 
-    const player = { chip: "S",}
+    return {getChip, getTurn}
+};
 
-    function checkDom() {
-        const square0 = document.getElementById("square0");
-        const square1 = document.getElementById("square1");
-        const square2 = document.getElementById("square2");
-        const square3 = document.getElementById("square3");
-        const square4 = document.getElementById("square4");
-        const square5 = document.getElementById("square5");
-        const square6 = document.getElementById("square6");
-        const square7 = document.getElementById("square7");
-        const square8 = document.getElementById("square8");  
+//Crear tablero
+
+const gameboard = (() => {
+    let gameboard =[ "","","","","","","","","" ];
+
+    const resetBoard = () => {
+        gameboard =["","","","","","","","",""];
+    }   
+
+    const checkGameboard = (index) => {
+        return gameboard[index];
     }
 
-    function chooseSquare(pChip, sqN) {
+    const chooseSquare = (pChip, sqN) => {
         gameboard.splice(sqN, 1, pChip)
-        render()
-    }
-
-    function render() {
-        square0.textContent = gameboard[0]
-        square1.textContent = gameboard[1]
-        square2.textContent = gameboard[2]
-        square3.textContent = gameboard[3]
-        square4.textContent = gameboard[4]
-        square5.textContent = gameboard[5]
-        square6.textContent = gameboard[6]
-        square7.textContent = gameboard[7]
-        square8.textContent = gameboard[8]
-    }
-    function loggear () {
         console.log(gameboard)
     }
 
-    board.forEach((button) => {
-        button.addEventListener("click", function (e,index)  {
-            index = tempBoard.indexOf(e.currentTarget)
-            if (e.currentTarget.textContent === "") {
-                chooseSquare(player.chip ,index)
-                console.log(gameboard) 
-                render()
-            } else {return}   
-        });
-      }); 
+return { resetBoard, chooseSquare, checkGameboard }
 
-    render()   
-
-}
-)()
+})();
 
 
-/* 
-const gameboard = (() => {
+//Crear display y logica
+    //event listeners
+        
+        //quitar EL y revisar si hay ganador
+        
+        //revisar si el juego termino
+       
+          //si termino reiniciar
+   
+      //llevar conteo turnos            
+
+const gamelogic = (() => {
+     
+    let player1 = Player("X", true);
+    let player2 = Player("O", false);
+    let round = 1;
+        
+    const board = document.querySelectorAll(".square")
+    const tempBoard = Array.from(board)
+    /* let gameEnd = false; */
+
+    const reset = () => {
+        player1.getTurn = true;
+        player2.getTurn = false;
+        round = 0;
+        gameboard.resetBoard()
+        /* gameEnd = false; */
+        for (const squares of board) {
+            squares.classList.remove(player1.getChip);
+            squares.classList.remove(player2.getChip);
+        }
+    }
+
+    const checkWin = (currentPlayer) => {
+        if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(1) === currentPlayer && gameboard.checkGameboard(2) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(3) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(5) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(6) === currentPlayer && gameboard.checkGameboard(7) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(3) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(1) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(7) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(5) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+            return true
+        } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
+            return true
+        } else {return false}
+    }  
+
+    const gameResults = () => {
+        const gameEnd = checkWin(whosTurn())
+        if (gameEnd === true) {
+            reset()
+            gameStart()
+        } else if (round > 8) {
+            reset()
+            gameStart()
+        } else {return}
+    }
+
+    const checkBoard = (e) => {
+        const selectedSquare = e.target;
+        index = tempBoard.indexOf(e.currentTarget)
+        gameboard.chooseSquare(whosTurn(),index)
+        console.log(selectedSquare) 
+        console.log(player1.getTurn) 
+        console.log(whosTurn()) 
+        console.log(round)          
+        putChip(selectedSquare, whosTurn()) 
+        gameResults() 
+        rounds()         
+        /* console.log(checkWin())  */
+        console.log(board) 
+        /* console.log(winConditions) */
+        console.log(gameboard.checkGameboard(0))
+        selectedSquare.removeEventListener("click", checkBoard)
+    }    
     
-    const board = document.querySelectorAll(".square");
-    let currentBoard = Array.from(board)
-    const player = { chip: "0",}
-
-
-    function checkDom() {
-        const square0 = document.getElementById("square0");
-        const square1 = document.getElementById("square1");
-        const square2 = document.getElementById("square2");
-        const square3 = document.getElementById("square3");
-        const square4 = document.getElementById("square4");
-        const square5 = document.getElementById("square5");
-        const square6 = document.getElementById("square6");
-        const square7 = document.getElementById("square7");
-        const square8 = document.getElementById("square8");  
+    const whosTurn = () => {      
+        return player1.getTurn ? player1.getChip : player2.getChip
+    };
+    const gameStart = () => {
+        board.forEach((div) => {
+            div.addEventListener("click", checkBoard);
+        });     
     }
-     function chooseSquare(pChip, sqN) {
-        gameboard.splice(sqN, 1, pChip)
-        render()
-    } 
-    function render() {
-        square0.textContent = currentBoard[0]
-        square1.textContent = currentBoard[1]
-        square2.textContent = currentBoard[2]
-        square3.textContent = currentBoard[3]
-        square4.textContent = currentBoard[4]
-        square5.textContent = currentBoard[5]
-        square6.textContent = currentBoard[6]
-        square7.textContent = currentBoard[7]
-        square8.textContent = currentBoard[8]
+    const putChip = (selectedSquare, whosTurn) => {
+        selectedSquare.classList.add(whosTurn)
     }
 
-
-
-    currentBoard.forEach((button) => {
-        button.addEventListener("click", function (e,index)  {
-            index = currentBoard.indexOf(e.currentTarget)
-            if (e.currentTarget.textContent !== "") {
-                e.currentTarget.textContent = "x"; 
-                console.log(currentBoard) 
-                render(index, "X")
-            } else { console.log(currentBoard)}
-            
-            
-        });
-      }); 
-
-    function newBoard () {       
-        currentBoard = Array.from(board)          
+    const rounds = () => {
+        player1.getTurn = !player1.getTurn;
+        player2.getTurn = !player2.getTurn;
+        round++
     }
-
-    function clearBoard() {
-        currentBoard.slice(0,9);
-    }
-    function render(index, tex) {
-        currentBoard[index].textContent = tex
-    }
- return currentBoard 
-render()
- console.log(Array.from(board)) 
-})(); */
+    gameStart()    
+})();

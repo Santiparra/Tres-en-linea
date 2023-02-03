@@ -1,8 +1,18 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
 .gameboard {
+    width: 100vw;
+    height: 100vh;
     display: grid;
-    grid-template-columns: repeat(3, maxcontent);
-    grid-template-rows: repeat(3, maxcontent);
-    grid-auto-flow: column;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    align-content: center;
+    /* grid-auto-flow: column; */
     gap: 8px;
 }   
 
@@ -10,4 +20,12 @@
     height: 60px;
     width: 60px;
     background-color: bisque;
+}
+
+.X {
+    background-color: green;
+}
+
+.O {
+    background-color: red;
 }
