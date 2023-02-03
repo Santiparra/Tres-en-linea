@@ -74,20 +74,22 @@ const gamelogic = (() => {
         } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
             return true 
         }  else if (gameboard.checkGameboard(0) !== "" && gameboard.checkGameboard(1) !== "" && gameboard.checkGameboard(2) !== "" && gameboard.checkGameboard(3) !== "" && gameboard.checkGameboard(4) !== "" && gameboard.checkGameboard(5) !== "" && gameboard.checkGameboard(6) !== "" && gameboard.checkGameboard(7) !== "" && gameboard.checkGameboard(8) !== "") {
-            wasTie()
+            return "tie"
         }  else {return false}
     }  
 
     const wasTie = () => {
-        resultMsg.textContent = "Fue un empate";
+        resultMsg.textContent = "Fue un empate!";
         killGame()
     }
 
     const gameResults = () => {
         const gameEnd = checkWin(whosTurn(), round)
         if (gameEnd === true) {
-            resultMsg.textContent = `${whosTurn()} fue el vencedor`;
+            resultMsg.textContent = `${whosTurn()} fue el vencedor!`;
             killGame();    
+        } else if (gameEnd === "tie"){
+            wasTie();
         } else {updateDisplay()}
     }
 

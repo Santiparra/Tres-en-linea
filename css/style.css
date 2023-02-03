@@ -6,7 +6,7 @@
     --border-color: #a9a9a9;
     --font-color: #000000;
     --font1: "Roboto";
-    --font2: "Mountains of Christmas";
+    --font2: "VT323";
     --font-logo: "Sofia";
     --font-fallback: "Inter,Helvetica Neue,Helvetica,Arial,sans-serif";
 }
@@ -33,6 +33,7 @@ body {
 }
 
 .header {
+    justify-content: center;
     background-color: var(--backG-color);
     color: var(--main-color);
     font-family: var(--font-logo);
@@ -43,7 +44,7 @@ body {
 }
 
 .gameboard {
-    margin-top: 5rem;
+    margin-top: 50px;
     background-color: var(--backG-color);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -75,12 +76,20 @@ body {
     cursor:auto;
 }
 
+.display {
+    align-self: center;
+}
+
 .gameResult {
-    text-align: center;
-    background-color: var(--border-color);
+    background-color: var(--main-color);
+    border: 5px solid var(--backG-color);
     padding: 1rem;
     font-size: 1.7rem;
-    font-family: var(--font-logo);
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    border-radius: 4px;
+    font-family: var(--font2);
 }
 
 .reset {
