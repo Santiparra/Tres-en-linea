@@ -57,23 +57,47 @@ const gamelogic = (() => {
     }
 
     const checkWin = (currentPlayer) => {
-        if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(1) === currentPlayer && gameboard.checkGameboard(2) === currentPlayer) {
+        if (gameboard.checkGameboard(0) === currentPlayer && 
+            gameboard.checkGameboard(1) === currentPlayer && 
+            gameboard.checkGameboard(2) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(3) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(5) === currentPlayer) {
+        } else if (gameboard.checkGameboard(3) === currentPlayer && 
+            gameboard.checkGameboard(4) === currentPlayer && 
+            gameboard.checkGameboard(5) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(6) === currentPlayer && gameboard.checkGameboard(7) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+        } else if (gameboard.checkGameboard(6) === currentPlayer && 
+            gameboard.checkGameboard(7) === currentPlayer && 
+            gameboard.checkGameboard(8) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(3) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
+        } else if (gameboard.checkGameboard(0) === currentPlayer && 
+            gameboard.checkGameboard(3) === currentPlayer && 
+            gameboard.checkGameboard(6) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(1) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(7) === currentPlayer) {
+        } else if (gameboard.checkGameboard(1) === currentPlayer && 
+            gameboard.checkGameboard(4) === currentPlayer && 
+            gameboard.checkGameboard(7) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(5) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+        } else if (gameboard.checkGameboard(2) === currentPlayer && 
+            gameboard.checkGameboard(5) === currentPlayer && 
+            gameboard.checkGameboard(8) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
+        } else if (gameboard.checkGameboard(0) === currentPlayer && 
+            gameboard.checkGameboard(4) === currentPlayer && 
+            gameboard.checkGameboard(8) === currentPlayer) {
             return true
-        } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
+        } else if (gameboard.checkGameboard(2) === currentPlayer && 
+            gameboard.checkGameboard(4) === currentPlayer && 
+            gameboard.checkGameboard(6) === currentPlayer) {
             return true 
-        }  else if (gameboard.checkGameboard(0) !== "" && gameboard.checkGameboard(1) !== "" && gameboard.checkGameboard(2) !== "" && gameboard.checkGameboard(3) !== "" && gameboard.checkGameboard(4) !== "" && gameboard.checkGameboard(5) !== "" && gameboard.checkGameboard(6) !== "" && gameboard.checkGameboard(7) !== "" && gameboard.checkGameboard(8) !== "") {
+        }  else if (gameboard.checkGameboard(0) !== "" && 
+            gameboard.checkGameboard(1) !== "" && 
+            gameboard.checkGameboard(2) !== "" && 
+            gameboard.checkGameboard(3) !== "" && 
+            gameboard.checkGameboard(4) !== "" && 
+            gameboard.checkGameboard(5) !== "" && 
+            gameboard.checkGameboard(6) !== "" && 
+            gameboard.checkGameboard(7) !== "" && 
+            gameboard.checkGameboard(8) !== "") {
             return "tie"
         }  else {return false}
     }  
