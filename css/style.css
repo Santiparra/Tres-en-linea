@@ -1,31 +1,111 @@
+:root {
+    --main-color: #fafafa;
+    --sec-color: #404040;
+    --aux-color: #0d9488;
+    --backG-color: #262626;
+    --border-color: #a9a9a9;
+    --font-color: #000000;
+    --font1: "Roboto";
+    --font2: "Mountains of Christmas";
+    --font-logo: "Sofia";
+    --font-fallback: "Inter,Helvetica Neue,Helvetica,Arial,sans-serif";
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
+body {
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    background-color: var(--main-color);
+}
+
+.header {
+    background-color: var(--backG-color);
+    color: var(--main-color);
+    font-family: var(--font-logo);
+    font-size: 4rem;
+    display: flex;
+    font-weight: 700;
+    padding-left: 1rem;
+}
 
 .gameboard {
-    width: 100vw;
-    height: 100vh;
+    margin-top: 5rem;
+    background-color: var(--backG-color);
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     justify-content: center;
     align-content: center;
-    /* grid-auto-flow: column; */
-    gap: 8px;
+    grid-gap: 8px;
+    border-radius: 10px;
 }   
 
 .square {
-    height: 60px;
-    width: 60px;
-    background-color: bisque;
+    height: 150px;
+    width: 150px;
+    background-color: var(--main-color);
+    cursor: pointer;
 }
 
 .X {
-    background-color: green;
+    background-image:url(img/X.png);
+    background-size: 90% 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: auto;
 }
 
 .O {
-    background-color: red;
+    background-image:url(img/O.png);
+    background-size: cover;
+    cursor:auto;
 }
+
+.gameResult {
+    text-align: center;
+    background-color: var(--border-color);
+    padding: 1rem;
+    font-size: 1.7rem;
+    font-family: var(--font-logo);
+}
+
+.reset {
+    width: 50%;
+    margin-top: 1rem;
+    align-self: center;
+    text-align: center;
+    background-color: var(--aux-color);
+    font-weight: 700;
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-style: italic;
+    gap: 20px;
+}
+
+.footer-img {
+    height: 30px;
+    width: 30px;
+  }

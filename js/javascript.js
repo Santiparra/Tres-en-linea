@@ -27,37 +27,29 @@ const gameboard = (() => {
     }
 
 return { resetBoard, chooseSquare, checkGameboard }
-
 })();
 
 
-//Crear display y logica
-    //event listeners
-        
-        //quitar EL y revisar si hay ganador
-        
-        //revisar si el juego termino
-       
-          //si termino reiniciar
-   
-      //llevar conteo turnos            
+//Crear display y logica           
 
 const gamelogic = (() => {
      
     let player1 = Player("X", true);
     let player2 = Player("O", false);
-    let round = 1;
+    let round = 0;
         
     const board = document.querySelectorAll(".square")
-    const tempBoard = Array.from(board)
-    /* let gameEnd = false; */
+    const resultMsg = document.querySelector(".gameResult")
+    const resetButton = document.querySelectorAll(".reset")
 
+    const tempBoard = Array.from(board)
+    
     const reset = () => {
         player1.getTurn = true;
         player2.getTurn = false;
         round = 0;
-        gameboard.resetBoard()
-        /* gameEnd = false; */
+        resultMsg.textContent = "Comienza el juego";
+        gameboard.resetBoard();
         for (const squares of board) {
             squares.classList.remove(player1.getChip);
             squares.classList.remove(player2.getChip);
@@ -80,47 +72,65 @@ const gamelogic = (() => {
         } else if (gameboard.checkGameboard(0) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(8) === currentPlayer) {
             return true
         } else if (gameboard.checkGameboard(2) === currentPlayer && gameboard.checkGameboard(4) === currentPlayer && gameboard.checkGameboard(6) === currentPlayer) {
-            return true
-        } else {return false}
+            return true 
+        }  else if (gameboard.checkGameboard(0) !== "" && gameboard.checkGameboard(1) !== "" && gameboard.checkGameboard(2) !== "" && gameboard.checkGameboard(3) !== "" && gameboard.checkGameboard(4) !== "" && gameboard.checkGameboard(5) !== "" && gameboard.checkGameboard(6) !== "" && gameboard.checkGameboard(7) !== "" && gameboard.checkGameboard(8) !== "") {
+            wasTie()
+        }  else {return false}
     }  
 
+    const wasTie = () => {
+        resultMsg.textContent = "Fue un empate";
+        killGame()
+    }
+
     const gameResults = () => {
-        const gameEnd = checkWin(whosTurn())
+        const gameEnd = checkWin(whosTurn(), round)
         if (gameEnd === true) {
-            reset()
-            gameStart()
-        } else if (round > 8) {
-            reset()
-            gameStart()
-        } else {return}
+            resultMsg.textContent = `${whosTurn()} fue el vencedor`;
+            killGame();    
+        } else {updateDisplay()}
+    }
+
+    const updateDisplay = () => {
+        if (whosTurn() === "X") {
+            resultMsg.textContent = "Es el turno de O"
+        } else if (whosTurn() === "O") {
+            resultMsg.textContent = "Es el turno de X"
+        }               
+    }
+
+    const killGame = () => {
+        for (let i = 0; i < 9; i++) {
+            gameboard.chooseSquare("X",i)         
+        }
     }
 
     const checkBoard = (e) => {
         const selectedSquare = e.target;
-        index = tempBoard.indexOf(e.currentTarget)
-        gameboard.chooseSquare(whosTurn(),index)
-        console.log(selectedSquare) 
+        const index = tempBoard.indexOf(e.currentTarget)
+        if (gameboard.checkGameboard(index) === "") {
+            gameboard.chooseSquare(whosTurn(),index)                 
+            putChip(selectedSquare, whosTurn()) 
+            gameResults(); 
+            rounds()
+        } else {return}    
         console.log(player1.getTurn) 
         console.log(whosTurn()) 
-        console.log(round)          
-        putChip(selectedSquare, whosTurn()) 
-        gameResults() 
-        rounds()         
-        /* console.log(checkWin())  */
-        console.log(board) 
-        /* console.log(winConditions) */
-        console.log(gameboard.checkGameboard(0))
-        selectedSquare.removeEventListener("click", checkBoard)
+        console.log(round)  
     }    
     
     const whosTurn = () => {      
         return player1.getTurn ? player1.getChip : player2.getChip
     };
-    const gameStart = () => {
-        board.forEach((div) => {
-            div.addEventListener("click", checkBoard);
-        });     
-    }
+    
+    resetButton.forEach((button) => {
+        button.addEventListener("click", reset);
+    });   
+
+    board.forEach((div) => {
+        div.addEventListener("click", checkBoard);
+    });     
+    
     const putChip = (selectedSquare, whosTurn) => {
         selectedSquare.classList.add(whosTurn)
     }
@@ -129,6 +139,5 @@ const gamelogic = (() => {
         player1.getTurn = !player1.getTurn;
         player2.getTurn = !player2.getTurn;
         round++
-    }
-    gameStart()    
+    }    
 })();
